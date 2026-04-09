@@ -12,7 +12,18 @@ public class Sound {
      *  @return the number of values in this sound that this method changed
      */
     public int limitAmplitude(int limit) {
-        /* to be implemented in part (a) */
+        int count = 0;
+        for (int i = 0; i < samples.length; i++) {
+            if (samples[i] > limit) {
+                samples[i] = limit;
+                count++;
+            }
+            else if (samples[i] < -limit) {
+                samples[i] = -limit;
+                count++;
+            }
+        }
+        return count;
     }
 
     /** Removes all silence from the beginning of this sound.
@@ -21,7 +32,14 @@ public class Sound {
      *  *Postcondition*: the length of `samples` reflects the removal of starting silence
      */
     public void trimSilenceFromBeginning() {
-        /* to be implemented in part (b) */
+        int start = 0;
+        while (samples[start] == 0)
+            start++;
+        int[] temp = new int[samples.length - start];
+        for (int i = 0; i < temp.length; i++) {
+            temp[i] = samples[i + start];
+        }
+        samples = temp;
     }
 
     public void setSamples(int[] samples) { this.samples = samples; }
